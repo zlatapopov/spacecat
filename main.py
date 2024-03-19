@@ -96,6 +96,7 @@ while is_running:
                    mode = "meteorites"
                    start_time = time.time()
                     #ошибка
+
             if mode == "alien_scene":
                 text_number += 2
                 if text_number > len(alien_text):
@@ -103,12 +104,14 @@ while is_running:
                    alien.rect.topleft = (-30,600)
                    alien.mode = "up"
                    mode = "moon"
+
                    start_time = time.time()
                    starship.switch_mode()
             if mode == "moon":
-                if event.type == pg.K_SPACE:
+                if event.key == pg.K_SPACE:
                     lasers.add(Laser(starship.rect.midtop))
                     laser_sound.play()
+
             if mode == "final_scene":
                 text_number += 2
                 if text_number > len(final_text):
@@ -122,13 +125,16 @@ while is_running:
         dialogue_mode(capitan, start_text )
 
 
+
     if mode == "meteorites":
-        if time.time() - start_time > 5.0:
+        if time.time() - start_time > 15.0:
             mode = "alien_scene"
         if random.randint(1,100) == 1:
             meteorites.add(Meteorite())
+
         starship.update()
         meteorites.update()
+
         hits = pg.sprite.spritecollide(starship, meteorites,True)
         for hit in hits:
             heart_count -= 1
